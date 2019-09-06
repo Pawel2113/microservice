@@ -29,20 +29,17 @@ public class DBServiceResource {
     }
 
     @PostMapping(value = "/add")
-//    public Map<Integer, String> addThing(@RequestBody final Thing thing, @PathVariable("value") String value, BindingResult result) {
     public List<Thing> addThing(@RequestBody final Thing thing, BindingResult result) {
-//    public String addThing(@RequestBody final Thing thing, BindingResult result) {
 
     new ThingRegisterValidator().validate(thing, result);
-//        value = "name:" +getThingById(thing.getId()).get(0);
         if (result.hasErrors()) {
             List<Thing> message = new ArrayList<Thing>();
-//            message.add("Nazwa nie może być pusta");
+            Thing messageObj = new Thing();
+            messageObj.setName("Nazwa nie może być pusta");
+            message.add(messageObj);
             return message;
-//            return null;
         } else {
             thingService.saveThing(thing);
-//            return null;
             return getThingById(thing.getId());
         }
     }
@@ -50,10 +47,6 @@ public class DBServiceResource {
     @GetMapping(value = "/list")
     public List<Thing> getThings(){
         return getAllThings();
-    }
-
-    private Map<Integer, String> getThingByIdk(@PathVariable("id") final int id) {
-        return thingRepository.findById(id).stream().collect(Collectors.toMap(Thing::getId, Thing::getName));
     }
 
 

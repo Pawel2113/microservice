@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ThingService {
 
-    public void saveThing(Thing thing);
+    void saveThing(Thing thing);
 
 }
